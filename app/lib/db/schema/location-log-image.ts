@@ -1,15 +1,11 @@
 import { int, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {locationLog} from './location-log'
 
-export const location = sqliteTable("location", {
+export const locationLogImage = sqliteTable("locationLogImage", {
   id: int().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
-  slug: text().notNull().unique(),
-  description: text().notNull(),
-  lat: real().notNull(),
-  long: real().notNull(),
+  key: text().notNull(),
+  locationLogId:int().notNull().references(() => locationLog.id),
   createdAt: int().notNull().$default(() => Date.now()),
   updatedAt:  int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now())
-
- 
 });
  
