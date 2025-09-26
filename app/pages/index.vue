@@ -11,8 +11,27 @@
         Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
         quasi. In deleniti eaque aut repudiandae et a id nisi.
       </p>
-      <button class="btn btn-primary">sign in with GitHub <Icon name="tabler:brand-github" size="28" /></button>
+      <button :disabled="isLoading" @click="signIn" class="btn btn-primary">
+          <span v-if="isLoading" class="loading loading-spinner"></span>
+        sign in with GitHub <Icon name="tabler:brand-github" size="28" /></button>
     </div>
   </div>
 </div>
 </template>
+
+<script setup lang="ts">
+const { signInWithGithub } = useAuth()
+const isLoading = ref(false)
+
+const signIn = async () => {
+  try {
+    isLoading.value = true
+    const result = await signInWithGithub()
+    console.log("Sign in successful:", result)
+  } catch (err) {
+    console.error("Sign in failed:", err)
+  }finally{
+    isLoading.value = false
+  }
+}
+</script>

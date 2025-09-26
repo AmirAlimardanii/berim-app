@@ -5,8 +5,28 @@
   </div>
   <div class="navbar-end gap-4">
     <app-toggle-theme/>
-    <button class="btn">SIGN IN <Icon name="tabler:login-2" size="22" /></button>
+    <button :disabled="isLoading" @click="signIn" class="btn">
+      <span v-if="isLoading" class="loading loading-spinner"></span>
+      SIGN IN <Icon name="tabler:login-2" size="22" /></button>
 
   </div>
 </div>
 </template>
+
+<script setup lang="ts">
+const { signInWithGithub } = useAuth()
+const isLoading = ref(false)
+
+const signIn = async () => {
+  try {
+    isLoading.value = true
+    const result = await signInWithGithub()
+    console.log("Sign in successful:", result)
+  } catch (err) {
+    console.error("Sign in failed:", err)
+  }finally{
+    isLoading.value = false
+  }
+}
+
+</script>
