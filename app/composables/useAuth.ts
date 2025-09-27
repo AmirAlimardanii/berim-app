@@ -8,6 +8,7 @@ export const useAuth = () => {
       const data = await authClient.signIn.social({
         provider: "github",
         callbackURL: '/dashboard',
+        errorCallbackURL: '/error',
       })
       return data
     } catch (error) {
