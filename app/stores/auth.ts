@@ -1,9 +1,7 @@
-const { signInWithGithub } = useAuth()
-
 export const useAuthStore = defineStore('useAuthStore', () =>{
 
 const loading = ref(false)
-const { signInWithGithub } = useAuth()
+const { signInWithGithub, user } = useAuth()
 
 const signIn = async () => {
   try {
@@ -17,7 +15,7 @@ const signIn = async () => {
   }
 }
 
-return { loading, signIn }
+return { loading, signIn, user }
 
 
 })

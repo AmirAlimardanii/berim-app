@@ -5,10 +5,22 @@
   </div>
   <div class="navbar-end gap-4">
     <app-toggle-theme/>
-    <button :disabled="loading" @click="signIn" class="btn">
+
+
+<div v-if="!loading && user">
+<button class="btn" popovertarget="popover-1" style="anchor-name:--anchor-1">
+ {{ user.name }}
+</button>
+<ul class="dropdown dropdown-end menu w-48 rounded-box bg-base-200 shadow-sm mt-1"
+  popover id="popover-1" style="position-anchor:--anchor-1">
+  <li><a class="text-error">LogOut <Icon name=tabler:logout /> </a></li>
+
+</ul>
+</div>
+
+    <button v-else  :disabled="loading" @click="signIn" class="btn">
       <span v-if="loading" class="loading loading-spinner"></span>
       SIGN IN <Icon name="tabler:login-2" size="22" /></button>
-
   </div>
 </div>
 </template>
@@ -16,7 +28,10 @@
 <script setup lang="ts">
 import { useAuthStore } from "~/stores/auth"
 
-const {loading,signIn} = useAuthStore()
+const {loading,signIn, user} = useAuthStore()
+
+console.log('user', user);
+
 
 
 </script>

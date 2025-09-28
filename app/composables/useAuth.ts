@@ -1,8 +1,12 @@
-import { createAuthClient } from "better-auth/client"
+import { createAuthClient } from "better-auth/vue"
 
 const authClient = createAuthClient()
 
 export const useAuth = () => {
+
+  const session = authClient.useSession()
+  const user = computed(() => session.value.data?.user || null)
+
   const signInWithGithub = async () => {
     try {
       const data = await authClient.signIn.social({
@@ -19,6 +23,7 @@ export const useAuth = () => {
 
   return {
     signInWithGithub,
+    user
   }
 }
 ``
