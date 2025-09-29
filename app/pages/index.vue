@@ -14,6 +14,7 @@
       <button v-if="!loading && !user" :disabled="loading" @click="signIn" class="btn btn-primary">
           <span v-if="loading" class="loading loading-spinner"></span>
         sign in with GitHub <Icon name="tabler:brand-github" size="28" /></button>
+        <nuxt-link v-else class="btn btn-primary" to="/dashboard">Dashboard</nuxt-link>
     </div>
   </div>
 </div>
