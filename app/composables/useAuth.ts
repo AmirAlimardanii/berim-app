@@ -21,8 +21,19 @@ export const useAuth = () => {
     }
   }
 
+    const logOut = async () => {
+    try {
+      const data = await authClient.signOut()
+      return data
+    } catch (error) {
+      console.error(" Sign-out Error:", error)
+      throw error
+    }
+  }
+
   return {
     signInWithGithub,
+    logOut,
     user
   }
 }
