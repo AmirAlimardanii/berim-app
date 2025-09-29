@@ -25,7 +25,7 @@
 </button>
 <ul class="dropdown dropdown-end menu w-48 rounded-box bg-base-200 shadow-sm mt-1"
   popover id="popover-1" style="position-anchor:--anchor-1">
-  <li><a class="text-error" @click="logOut">LogOut <Icon name=tabler:logout /> </a></li>
+  <li><a class="text-error" @click="logOut">Log Out <Icon name=tabler:logout /> </a></li>
 
 </ul>
 </div>
