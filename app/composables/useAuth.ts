@@ -24,6 +24,7 @@ export const useAuth = () => {
     const logOut = async () => {
     try {
       const data = await authClient.signOut()
+      navigateTo('/')
       return data
     } catch (error) {
       console.error(" Sign-out Error:", error)
