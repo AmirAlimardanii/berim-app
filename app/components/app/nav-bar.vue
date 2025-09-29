@@ -9,6 +9,18 @@
 
 <div v-if="!loading && user">
 <button class="btn" popovertarget="popover-1" style="anchor-name:--anchor-1">
+
+  <div v-if="user && user?.image" class="avatar avatar-online">
+  <div class="w-[35px] rounded-full">
+    <img :src="user.image" />
+  </div>
+</div>
+
+ <div v-else class="avatar avatar-placeholder">
+  <div class="bg-neutral text-neutral-content w-[35px] rounded-full">
+    <span class="text-lg">{{ user.name.slice(0,2) }}</span>
+  </div>
+</div>
  {{ user.name }}
 </button>
 <ul class="dropdown dropdown-end menu w-48 rounded-box bg-base-200 shadow-sm mt-1"
