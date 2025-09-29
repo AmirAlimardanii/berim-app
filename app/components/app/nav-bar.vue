@@ -27,10 +27,11 @@
 
 <script setup lang="ts">
 import { useAuthStore } from "~/stores/auth"
+import { useAuth } from  '~/composables/useAuth'
 
-const {loading,signIn, user} = useAuthStore()
+const { user } = useAuth()
+const {loading,signIn} = useAuthStore()
 
-console.log('user', user);
 
 
 

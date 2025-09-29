@@ -14,8 +14,6 @@
       <button v-if="!loading && !user" :disabled="loading" @click="signIn" class="btn btn-primary">
           <span v-if="loading" class="loading loading-spinner"></span>
         sign in with GitHub <Icon name="tabler:brand-github" size="28" /></button>
-
-        <button v-else class="btn btn-primary">{{ user?.name }}</button>
     </div>
   </div>
 </div>
@@ -23,6 +21,8 @@
 
 <script setup lang="ts">
 import { useAuthStore } from "~/stores/auth"
+import { useAuth } from  '~/composables/useAuth'
 
-const {loading,signIn, user} = useAuthStore()
+const {user} = useAuth()
+const {loading,signIn} = useAuthStore()
 </script>
