@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/icon",
     "@nuxtjs/color-mode",
-    "@pinia/nuxt"
+    "@pinia/nuxt",
+    'pinia-plugin-persistedstate/nuxt',
   ],
   css: [
     "./assets/css/main.css",
