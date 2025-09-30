@@ -1,22 +1,22 @@
 <template>
   <div class="flex flex-1">
     <div
-      class="bg-base-200 p-2 transition-all duration-900 ease-in-out"
-      :class="sidebarOpen ? 'w-64' : 'w-20'"
+      class="bg-base-200 p-2 transition-all duration-800 ease-in-out"
+      :class="sidebarOpen ? 'w-64' : 'w-18'"
     >
       <div @click="toggleSidebar" class="flex justify-end p-3">
         <div
-          class="btn btn-circle text-primary transition-transform duration-300 ease-in-out"
+          class="btn btn-circle text-primary transition-transform duration-500 ease-in-out"
           :class="sidebarOpen ? 'rotate-180' : ''"
         >
-          <Icon name="tabler:chevron-left" size="26" />
+          <Icon name="tabler:chevron-right" size="26" />
         </div>
       </div>
 
       <div class="flex flex-col gap-1 overflow-hidden">
         <NuxtLink
           to="/dashboard"
-          class="btn btn-ghost justify-start transition-all duration-200 ease-in-out"
+          class="btn btn-ghost justify-start transition-all duration-300 ease-in-out"
         >
           <Icon name="tabler:map" size="20" />
           <transition name="fade-slide">
@@ -26,7 +26,7 @@
 
         <NuxtLink
           to="/dashboard/projects"
-          class="btn btn-ghost justify-start transition-all duration-200 ease-in-out"
+          class="btn btn-ghost justify-start transition-all duration-300 ease-in-out"
         >
           <Icon name="tabler:plus" size="20" />
           <transition name="fade-slide">
