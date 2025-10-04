@@ -25,7 +25,7 @@
         </NuxtLink>
 
         <NuxtLink
-          to="/dashboard/projects"
+          to="/dashboard/add"
           class="btn btn-ghost justify-start transition-all duration-300 ease-in-out"
         >
           <Icon name="tabler:plus" size="20" />
@@ -48,7 +48,9 @@
       </div>
     </div>
 
-    <div class="flex-1"></div>
+    <div class="flex-1">
+      <NuxtPage />
+    </div>
   </div>
 </template>
 
