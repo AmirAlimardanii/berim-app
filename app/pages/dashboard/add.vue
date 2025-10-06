@@ -9,23 +9,30 @@
       <form class="mx-auto max-w-xl mt-4 w-100" @submit.prevent="onSubmit">
         <fieldset class="fieldset">
   <legend class="fieldset-legend">Name</legend>
-  <Field name="name" type="text" class="input w-100" placeholder="name ...." />
+  <Field name="name" type="text" class="input w-100" :class="{'input-error': errors.name}" placeholder="name ...." />
+  <p v-if="errors.name" class="fieldset-label text-error font-bold">{{ errors.name }}</p>
 </fieldset>
 
 <fieldset class="fieldset">
   <legend class="fieldset-legend">Description</legend>
-  <Field type="textarea" name="description" class="textarea h-24 w-100" placeholder="description ..." />
+  <Field type="textarea" name="description" class="textarea h-24 w-100" :class="{'input-error': errors.description}" placeholder="description ..." />
+  <p v-if="errors.description" class="fieldset-label text-error font-bold">{{ errors.description }}</p>
+
 </fieldset>
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Latitude</legend>
-  <Field name="lat" type="number" class="input w-100" placeholder="latitude ..." />
+  <Field name="lat" type="number" class="input w-100"  :class="{'input-error': errors.lat}" placeholder="latitude ..." />
+  <p v-if="errors.lat" class="fieldset-label text-error font-bold">{{ errors.lat }}</p>
+
 </fieldset>
 
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Longitude</legend>
-  <Field name="long" type="number" class="input w-100" placeholder="longitude ..." />
+  <Field name="long" type="number" class="input w-100" :class="{'input-error': errors.long}" placeholder="longitude ..." />
+  <p v-if="errors.long" class="fieldset-label text-error font-bold">{{ errors.long }}</p>
+
 </fieldset>
 
 
@@ -58,14 +65,8 @@ const {handleSubmit,errors} =useForm({
   validationSchema : toTypedSchema(InsertLocation)
 })
 
-effect(() => {
-  console.log(toRaw(errors.value));
-  
-})
 
 const onSubmit = handleSubmit((values) =>{
   console.log(values);
-  
-
 })
 </script>
