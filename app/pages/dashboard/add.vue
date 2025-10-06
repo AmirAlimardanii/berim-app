@@ -6,26 +6,26 @@
             <h1 class="card">Add Your Favorite Locations</h1>
         </div>
      
-      <div class="mx-auto max-w-xl mt-4 w-100">
+      <Form class="mx-auto max-w-xl mt-4 w-100">
         <fieldset class="fieldset">
   <legend class="fieldset-legend">Name</legend>
-  <input name="name" type="text" class="input w-100" placeholder="name ...." />
+  <Field name="name" type="text" class="input w-100" placeholder="name ...." />
 </fieldset>
 
 <fieldset class="fieldset">
   <legend class="fieldset-legend">Description</legend>
-  <textarea name="description" class="textarea h-24 w-100" placeholder="description ..."></textarea>
+  <Field type="textarea" name="description" class="textarea h-24 w-100" placeholder="description ..." />
 </fieldset>
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Latitude</legend>
-  <input name="latitude" type="number" class="input w-100" placeholder="latitude ..." />
+  <Field name="latitude" type="number" class="input w-100" placeholder="latitude ..." />
 </fieldset>
 
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Longitude</legend>
-  <input name="longitude" type="number" class="input w-100" placeholder="longitude ..." />
+  <Field name="longitude" type="number" class="input w-100" placeholder="longitude ..." />
 </fieldset>
 
 
@@ -40,8 +40,21 @@
     </button>
 
 </div>
+</Form>
       </div>
-    </div>
 
 
 </template>
+
+
+
+<script setup lang="ts">
+import { InsertLocation } from '~/lib/db/schema';
+import {toTypedSchema} from '@vee-validate/zod'
+
+
+
+const {handleSubmit} =useForm({
+  validationSchema : toTypedSchema(InsertLocation)
+})
+</script>

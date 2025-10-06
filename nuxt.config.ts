@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
     'pinia-plugin-persistedstate/nuxt',
+    '@vee-validate/nuxt',
   ],
   css: [
     "./assets/css/main.css",
