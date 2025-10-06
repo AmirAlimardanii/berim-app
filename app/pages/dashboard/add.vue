@@ -6,7 +6,7 @@
             <h1 class="card">Add Your Favorite Locations</h1>
         </div>
      
-      <Form class="mx-auto max-w-xl mt-4 w-100">
+      <form class="mx-auto max-w-xl mt-4 w-100" @submit.prevent="onSubmit">
         <fieldset class="fieldset">
   <legend class="fieldset-legend">Name</legend>
   <Field name="name" type="text" class="input w-100" placeholder="name ...." />
@@ -19,13 +19,13 @@
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Latitude</legend>
-  <Field name="latitude" type="number" class="input w-100" placeholder="latitude ..." />
+  <Field name="lat" type="number" class="input w-100" placeholder="latitude ..." />
 </fieldset>
 
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Longitude</legend>
-  <Field name="longitude" type="number" class="input w-100" placeholder="longitude ..." />
+  <Field name="long" type="number" class="input w-100" placeholder="longitude ..." />
 </fieldset>
 
 
@@ -40,7 +40,7 @@
     </button>
 
 </div>
-</Form>
+</form>
       </div>
 
 
@@ -54,7 +54,18 @@ import {toTypedSchema} from '@vee-validate/zod'
 
 
 
-const {handleSubmit} =useForm({
+const {handleSubmit,errors} =useForm({
   validationSchema : toTypedSchema(InsertLocation)
+})
+
+effect(() => {
+  console.log(toRaw(errors.value));
+  
+})
+
+const onSubmit = handleSubmit((values) =>{
+  console.log(values);
+  
+
 })
 </script>
