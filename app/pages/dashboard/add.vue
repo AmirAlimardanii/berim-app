@@ -51,6 +51,14 @@
       </div>
 
 
+      <div v-if="submitError" class="toast toast-end">
+  <div class="alert alert-error">
+    <span>{{submitError}}</span>
+  </div>
+
+</div>
+
+
 </template>
 
 
@@ -59,6 +67,7 @@
 import { InsertLocation } from '~/lib/db/schema';
 import {toTypedSchema} from '@vee-validate/zod'
 
+const submitError = ref<string|null>(null)
 
 
 const {handleSubmit,errors, meta} =useForm({
@@ -66,8 +75,22 @@ const {handleSubmit,errors, meta} =useForm({
 })
 
 
-const onSubmit = handleSubmit((values) =>{
-  console.log(values);
+const onSubmit = handleSubmit(async (values) =>{
+  try {
+    const res = await $fetch('/api/location', {
+    method: 'POST',
+    body: values
+  })
+  console.log(res);
+  } catch (e) {
+    const error = e as Error
+    submitError.value = error.message || 'An Unknow ERROR Accured';
+
+  const timeout = setTimeout(() => {
+ submitError.value = null
+}, 3000);
+
+  }
 })
 
 
