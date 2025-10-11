@@ -9,20 +9,20 @@
       <form class="mx-auto max-w-xl mt-4 w-100" @submit.prevent="onSubmit">
         <fieldset class="fieldset">
   <legend class="fieldset-legend">Name</legend>
-  <Field name="name" type="text" class="input w-100" :class="{'input-error': errors.name}" placeholder="name ...." />
+  <Field name="name" type="text" class="input w-100" :class="{'input-error': errors.name}" placeholder="name ...." :disabled="loading" />
   <p v-if="errors.name" class="fieldset-label text-error font-bold">{{ errors.name }}</p>
 </fieldset>
 
 <fieldset class="fieldset">
   <legend class="fieldset-legend">Description</legend>
-  <Field type="textarea" name="description" class="textarea h-24 w-100" :class="{'input-error': errors.description}" placeholder="description ..." />
+  <Field type="textarea" name="description" class="textarea h-24 w-100" :class="{'input-error': errors.description}" placeholder="description ..." :disabled="loading" />
   <p v-if="errors.description" class="fieldset-label text-error font-bold">{{ errors.description }}</p>
 
 </fieldset>
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Latitude</legend>
-  <Field name="lat" type="number" class="input w-100"  :class="{'input-error': errors.lat}" placeholder="latitude ..." />
+  <Field name="lat" type="number" class="input w-100"  :class="{'input-error': errors.lat}" placeholder="latitude ..." :disabled="loading" />
   <p v-if="errors.lat" class="fieldset-label text-error font-bold">{{ errors.lat }}</p>
 
 </fieldset>
@@ -30,20 +30,22 @@
 
   <fieldset class="fieldset">
   <legend class="fieldset-legend">Longitude</legend>
-  <Field name="long" type="number" class="input w-100" :class="{'input-error': errors.long}" placeholder="longitude ..." />
+  <Field name="long" type="number" class="input w-100" :class="{'input-error': errors.long}" placeholder="longitude ..." :disabled="loading" />
   <p v-if="errors.long" class="fieldset-label text-error font-bold">{{ errors.long }}</p>
 
 </fieldset>
 
 
 <div class="flex justify-between mt-2">
-<button @click="navigateTo('/dashboard')" class="btn  btn-square">
-        <Icon name="tabler:arrow-left" size="22" />
+<button @click="navigateTo('/dashboard')" class="btn  btn-square" :disabled="loading">
+  <span v-if="loading" class="loading loading-spinner loading-md"></span>
+        <Icon v-else name="tabler:arrow-left" size="22" />
     </button>
 
 
-    <button class="btn btn-primary">Add
-        <Icon name="tabler:plus" size="22" />
+    <button class="btn btn-primary" :disabled="loading">Add
+      <span v-if="loading" class="loading loading-spinner loading-md"></span>
+        <Icon v-else name="tabler:plus" size="22" />
     </button>
 
 </div>
@@ -68,6 +70,7 @@ import { InsertLocation } from '~/lib/db/schema';
 import {toTypedSchema} from '@vee-validate/zod'
 
 const submitError = ref<string|null>(null)
+const loading = ref<boolean>(false)
 
 
 const {handleSubmit,errors, meta} =useForm({
@@ -77,6 +80,8 @@ const {handleSubmit,errors, meta} =useForm({
 
 const onSubmit = handleSubmit(async (values) =>{
   try {
+    submitError.value = null
+    loading.value = true
     const res = await $fetch('/api/location', {
     method: 'POST',
     body: values
@@ -86,10 +91,12 @@ const onSubmit = handleSubmit(async (values) =>{
     const error = e as Error
     submitError.value = error.message || 'An Unknow ERROR Accured';
 
-  const timeout = setTimeout(() => {
- submitError.value = null
-}, 3000);
+    const timeout = setTimeout(() => {
+     submitError.value = null
+     }, 3000);
 
+  }finally{
+    loading.value = false
   }
 })
 
