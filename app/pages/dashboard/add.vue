@@ -37,7 +37,7 @@
 
 
 <div class="flex justify-between mt-2">
-<button class="btn  btn-square">
+<button @click="navigateTo('/dashboard')" class="btn  btn-square">
         <Icon name="tabler:arrow-left" size="22" />
     </button>
 
@@ -61,12 +61,24 @@ import {toTypedSchema} from '@vee-validate/zod'
 
 
 
-const {handleSubmit,errors} =useForm({
+const {handleSubmit,errors, meta} =useForm({
   validationSchema : toTypedSchema(InsertLocation)
 })
 
 
 const onSubmit = handleSubmit((values) =>{
   console.log(values);
+})
+
+
+onBeforeRouteLeave(() =>{
+  if(meta.value.dirty){
+    const confirm = window.confirm('Are You Sure You Want To Leave ?')
+
+    if(!confirm) return false
+  }
+
+  return true
+  
 })
 </script>
