@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     'pinia-plugin-persistedstate/nuxt',
     '@vee-validate/nuxt',
+    "nuxt-csurf"
   ],
   css: [
     "./assets/css/main.css",

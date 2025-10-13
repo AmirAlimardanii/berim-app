@@ -69,8 +69,11 @@
 import { InsertLocation } from '~/lib/db/schema';
 import {toTypedSchema} from '@vee-validate/zod'
 
+
+const { $csrfFetch } = useNuxtApp()
 const submitError = ref<string|null>(null)
 const loading = ref<boolean>(false)
+const submitted = ref<boolean>(false)
 
 
 const {handleSubmit,errors, meta} =useForm({
@@ -82,11 +85,11 @@ const onSubmit = handleSubmit(async (values) =>{
   try {
     submitError.value = null
     loading.value = true
-    const res = await $fetch('/api/location', {
+    const res = await $csrfFetch('/api/location', {
     method: 'POST',
     body: values
   })
-  console.log(res);
+  submitted.value = true
   } catch (e) {
     const error = e as Error
     submitError.value = error.message || 'An Unknow ERROR Accured';
@@ -97,18 +100,16 @@ const onSubmit = handleSubmit(async (values) =>{
 
   }finally{
     loading.value = false
+    navigateTo('/dashboard')
   }
 })
 
 
 onBeforeRouteLeave(() =>{
-  if(meta.value.dirty){
+  if(meta.value.dirty && !submitted.value){
     const confirm = window.confirm('Are You Sure You Want To Leave ?')
-
     if(!confirm) return false
   }
-
   return true
-  
 })
 </script>
