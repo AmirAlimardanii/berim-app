@@ -6,6 +6,9 @@ export const useAuth = () => {
 
   const session = authClient.useSession()
   const user = computed(() => session.value.data?.user || null)
+  const {csrf} = useCsrf();
+  const headers = new Headers()
+  headers.append("csrf-token", csrf)
 
   const signInWithGithub = async () => {
     try {
@@ -13,6 +16,9 @@ export const useAuth = () => {
         provider: "github",
         callbackURL: '/dashboard',
         errorCallbackURL: '/error',
+        fetchOptions:{
+          headers,
+        }
       })
       return data
     } catch (error) {
@@ -22,8 +28,16 @@ export const useAuth = () => {
   }
 
     const logOut = async () => {
+      const {csrf} = useCsrf();
+      const headers = new Headers()
+      headers.append("csrf-token", csrf)
+
     try {
-      const data = await authClient.signOut()
+      const data = await authClient.signOut({
+        fetchOptions:{
+          headers,
+        }
+      })
       navigateTo('/')
       return data
     } catch (error) {
