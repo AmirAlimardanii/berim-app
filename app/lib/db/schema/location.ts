@@ -2,6 +2,7 @@ import { int, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from 'drizzle-zod';
 
 import { user } from "./auth";
+import { unique } from "drizzle-orm/gel-core";
 
 export const location = sqliteTable("location", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -12,10 +13,12 @@ export const location = sqliteTable("location", {
   lat: real().notNull(),
   long: real().notNull(),
   createdAt: int().notNull().$default(() => Date.now()),
-  updatedAt:  int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now())
+  updatedAt: int().notNull().$default(() => Date.now()).$onUpdate(() => Date.now())
+}, 
+table => [
+  unique().on(table.name, table.userId),
+]);
 
- 
-});
  
 
 export const InsertLocation = createInsertSchema(location, 
