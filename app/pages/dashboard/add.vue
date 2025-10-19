@@ -89,6 +89,9 @@ const onSubmit = handleSubmit(async (values) =>{
     method: 'POST',
     body: values
   })
+  if (res) {
+    navigateTo('/dashboard')
+  }
   submitted.value = true
   } catch (e) {
     const error = e as Error
@@ -100,7 +103,6 @@ const onSubmit = handleSubmit(async (values) =>{
 
   }finally{
     loading.value = false
-    navigateTo('/dashboard')
   }
 })
 
