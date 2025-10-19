@@ -1,6 +1,12 @@
 import { DrizzleError } from 'drizzle-orm'
 import db from '~/lib/db'
 import { InsertLocation, location } from '~/lib/db/schema'
+import slugify from 'slug'
+import { eq } from 'drizzle-orm';
+import {customAlphabet} from 'nanoid'
+
+const nanoid = customAlphabet("1234567890abcdefghijkmlnopqrstwyz", 5)
+
 
 export default defineEventHandler(async (event) => {
 
@@ -23,10 +29,28 @@ export default defineEventHandler(async (event) => {
       }))
   }
 
+let slug = slugify(result.data.name);
+let existing = !!(await db.query.location.findFirst({
+  where: eq(location.slug, slug)
+}))
+
+while (existing){
+  const id = nanoid()
+  const idSlug = `${slug}-${id}`
+   existing = !!(await db.query.location.findFirst({
+  where: eq(location.slug, idSlug)
+  }))
+  if(existing){
+    slug = idSlug
+  }
+}
+
+
+
   try {
      const [created] = await db.insert(location).values({
     ...result.data,
-    slug: result.data.name.replaceAll(' ', '-').toLowerCase(),
+    slug,
     userId: event.context.user.id
   }).returning();
    return created;
