@@ -40,7 +40,7 @@ while (existing){
    existing = !!(await db.query.location.findFirst({
   where: eq(location.slug, idSlug)
   }))
-  if(existing){
+  if(!existing){
     slug = idSlug
   }
 }
